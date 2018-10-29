@@ -1,0 +1,34 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="">{{ field.label }}</label>
+                        {{ field }} <span class="erorr pull-right">{{ field.errors.0 }}</span>
+                        {% if field.is_pop %}
+                            <span class="plus"><a onclick="add_option('{{ field.url }}')">+</a></span>
+                            <!-- 为加号绑定点击事件-->
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+
+                <input type="submit" class="btn btn-default pull-right">
+
+            </form>
+        </div>
+    </div>
+</div>
+    <script>
+
+    function add_option(url) {
+
+        window.open(url,"","height=500,width=1000,top=100,left=100")
+    }
+    <!-- 定义一个函数，函数的功能是打开一个窗口，然后在这值窗口的url以及大小。-->
+</script>

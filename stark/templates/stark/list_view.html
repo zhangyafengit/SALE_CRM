@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery-3.3.1.min.js"></script>
+    <style>
+        .action {
+            width: 300px;
+        }
+    </style>
+</head>
+<body style="
+    margin-top: 50px;
+">
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-8 col-lg-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">stark 显示页面</h3>
+                </div>
+                <div class="panel-body">
+                    <!-- 搜索框-->
+                    {% if showlist.conf_obj.search_fields %}
+
+                        <form>
+                            <div class="col-lg-4 pull-right">
+                                <div class="input-group form-group">
+                                    <input type="text" class="form-control" name="search"
+                                           value="{{ showlist.conf_obj.key_word }}" placeholder="关键字">
+                                    <span class="input-group-btn">
+                                                 <button class="btn btn-default" type="submit">搜索</button>
+                                                </span>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    <!-- 批量操作框-->
+                    <form action="" class="form-inline" method="post">
+                        {% csrf_token %}
+                        <select class="form-control action" name="action">
+                            <option>-----------------------</option>
+                            {% for func_dict in showlist.get_actions %}
+                                <option value="{{ func_dict.name }}">{{ func_dict.desc }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" class="btn btn-info">
+                        <table class="table-bordered table">
+                            <thead>
+
+                            {% for foo in showlist.get_head_list %}
+                                <th>{{ foo }}</th>
+                            {% endfor %}
+
+                            </thead>
+                            <tbody>
+                            {% for item in showlist.get_data_list %}
+                                <tr>{% for foo in item %}
+                                    <td>{{ foo }}</td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <div>
+                    <a href="{{ add_url }}" class="btn btn-success pull-right">添加</a>
+                </div>
+            </div>
+
+
+            <nav aria-label="...">
+                <ul class="pagination">
+                    {{ showlist.pagination.page_html|safe }}
+                </ul>
+            </nav>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>
