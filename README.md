@@ -1,2 +1,2 @@
 # SELL_CRM
-customer relationship to manage
+customer relationship to salesperson and all the salesperson's access
